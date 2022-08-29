@@ -1,6 +1,9 @@
 import exception.InvalidInputException;
 import java.net.URL;
 import java.util.Random;
+import static utils.UrlCreationUtils.ALPHANUMERIC;
+import static utils.UrlCreationUtils.DEFAULT_DOMAIN;
+import static utils.UrlCreationUtils.SLASH;
 
 public class UrlShortenerService {
 
@@ -9,17 +12,25 @@ public class UrlShortenerService {
   }
 
 
-  public final static String shortDomain = "http://mydomain.com";
 
-  public final static String slash = "/";
-
-  public final static String alphanumeric = "0123456789abcdefghijklmnopqrstuvwxyz";
-
-  public static String shortenUrl(String longUrl) throws Exception {
+  public static String shortUrlWithSeoWord(String longUrl, String seoWord) throws Exception {
 
     checkValidUrl(longUrl);
 
-    return shortDomain + slash + generateRandomAlphanumericString(4);
+    if (seoWord == null || seoWord.isEmpty()){
+      throw new InvalidInputException("SEO word cannot be empty");
+    }
+
+    return DEFAULT_DOMAIN + SLASH + seoWord;
+
+  }
+
+
+  public static String shortUrlWithRandomAlphanumeric(String longUrl) throws Exception {
+
+    checkValidUrl(longUrl);
+
+    return DEFAULT_DOMAIN + SLASH + generateRandomAlphanumericString(4);
 
   }
 
@@ -30,7 +41,7 @@ public class UrlShortenerService {
 
     StringBuilder result = new StringBuilder();
     for (int i = 0; i < length; i++) {
-      result.append(alphanumeric.charAt(random.nextInt(alphanumeric.length())));
+      result.append(ALPHANUMERIC.charAt(random.nextInt(ALPHANUMERIC.length())));
 
     }
     return result.toString();
