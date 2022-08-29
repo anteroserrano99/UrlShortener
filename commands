@@ -1,5 +1,12 @@
-#Builds docker image
+#Builds java image
 docker build -t url-shortener .
 
 #Start my app
 docker run -p 8080:8080 url-shortener
+
+#Builds db image
+cd db
+docker build -t db .
+
+#Starts db
+docker run -p 5432:5432 db
